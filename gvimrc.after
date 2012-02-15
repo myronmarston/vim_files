@@ -1,0 +1,5 @@
+set guifont=Monaco:h14            " Font family and font size.
+colorscheme vividchalk
+
+set guioptions=aAce
+

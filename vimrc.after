@@ -1,0 +1,87 @@
+set list                          " Show hidden characters (tab and eol)
+set listchars=trail:⋅,nbsp:⋅,tab:▸\ ,eol:¬       " Use the same chars as textmate.
+
+"Invisible character colors
+highlight NonText guifg=#4a4a59
+highlight SpecialKey guifg=#4a4a59
+
+" Allow list to be toggled easily
+nmap <leader>l :set list!<CR>
+
+nnoremap <leader>d :NERDTreeToggle<cr>
+
+" taken from: http://stackoverflow.com/questions/356126/how-can-you-automatically-remove-trailing-whitespace-in-vim/1618401#1618401
+fun! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    call cursor(l, c)
+endfun
+
+" auto-strip trailing white space for ruby files
+"autocmd BufWritePre *.rb :call <SID>StripTrailingWhitespaces()
+
+" command to strip white space from any file
+nnoremap <leader>s :call <SID>StripTrailingWhitespaces()<cr>
+
+colorscheme vividchalk
+
+" Keep text selected after shifting it left or right.
+vmap < <gv
+vmap > >gv
+
+" Allow tab to be used for autocompletion
+imap <Tab> <C-N>
+imap <S-Tab> <C-P>
+
+let g:bufExplorerShowRelativePath=1 " use relative paths for buffer explorer
+
+set undodir=~/.vim/undodir
+set undofile
+
+set transparency=12
+
+" Test helpers from Gary Bernhardt's screen cast:
+" https://www.destroyallsoftware.com/screencasts/catalog/file-navigation-in-vim
+" https://www.destroyallsoftware.com/file-navigation-in-vim.html
+function! RunTests(filename)
+    " Write the file and run tests for the given filename
+    :w
+    :silent !echo;echo;echo;echo;echo
+    exec ":!time rspec " . a:filename
+endfunction
+
+function! SetTestFile()
+    " Set the spec file that tests will be run for.
+    let t:grb_test_file=@%
+endfunction
+
+function! RunTestFile(...)
+    if a:0
+        let command_suffix = a:1
+    else
+        let command_suffix = ""
+    endif
+
+    " Run the tests for the previously-marked file.
+    let in_spec_file = match(expand("%"), '_spec.rb$') != -1
+    if in_spec_file
+        call SetTestFile()
+    elseif !exists("t:grb_test_file")
+        return
+    end
+    call RunTests(t:grb_test_file . command_suffix)
+endfunction
+
+function! RunNearestTest()
+    let spec_line_number = line('.')
+    call RunTestFile(":" . spec_line_number)
+endfunction
+
+" Run this file
+map <leader>m :call RunTestFile()<cr>
+" Run only the example under the cursor
+map <leader>M :call RunNearestTest()<cr>
+" Run all test files
+map <leader>a :call RunTests('spec')<cr>
+
