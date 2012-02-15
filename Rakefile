@@ -19,7 +19,14 @@ task :install_plugins do
     FileUtils.mkdir_p('.janus')
     Dir.chdir('.janus') do
       extra_plugins.each do |plugin|
-        sh "git clone #{plugin}"
+        dir = plugin.split('/').last.gsub(/.git$/, '')
+        if File.exist?(dir)
+          puts "Updating #{dir}..."
+          Dir.chdir(dir) { sh "git pull --rebase" }
+        else
+          puts "Installing #{dir}..."
+          sh "git clone #{plugin}"
+        end
       end
     end
   end
