@@ -1,4 +1,34 @@
 let mapleader = ","               " The default leader key isn't very intuitive.
 
+" For the full list of janus plugins, see:
+" https://github.com/carlhuda/janus/blob/master/janus/submodules.yaml
+
 call janus#disable_plugin('buffergator')
+call janus#disable_plugin('css-color')
+call janus#disable_plugin('easymotion')
+call janus#disable_plugin('gundo')
+call janus#disable_plugin('indent-object')
+call janus#disable_plugin('kwbd')
+call janus#disable_plugin('matchit')
+call janus#disable_plugin('narrowregion')
+call janus#disable_plugin('pep8')
+call janus#disable_plugin('rename2')
+call janus#disable_plugin('snipmate')
+call janus#disable_plugin('snipmate-snippets')
+call janus#disable_plugin('tlib')
+call janus#disable_plugin('unimpaired')
+call janus#disable_plugin('vim-addon-mw-utils')
+call janus#disable_plugin('vimwiki')
+call janus#disable_plugin('zoomwin')
+
+" Plugins I definitely want to keep:
+"call janus#disable_plugin('ack')
+"call janus#disable_plugin('ctrlp')
+"call janus#disable_plugin('endwise')
+"call janus#disable_plugin('fugitive')
+"call janus#disable_plugin('gist')
+"call janus#disable_plugin('supertab')
+"call janus#disable_plugin('surround')
+"call janus#disable_plugin('syntastic')
+"call janus#disable_plugin('tagbar')
 
