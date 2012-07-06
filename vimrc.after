@@ -56,7 +56,7 @@ let g:bufExplorerShowRelativePath=1 " use relative paths for buffer explorer
 set undodir=~/.vim/undodir
 set undofile
 
-set transparency=12
+"set transparency=12
 
 " Test helpers from Gary Bernhardt's screen cast:
 " https://www.destroyallsoftware.com/screencasts/catalog/file-navigation-in-vim
