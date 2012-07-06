@@ -109,7 +109,7 @@ autocmd BufReadPost *
   \ endif
 
 " Clear the search buffer when hitting return
-:nnoremap <CR> :nohlsearch<cr>
+:nnoremap <leader><CR> :nohlsearch<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " RENAME CURRENT FILE
