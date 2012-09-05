@@ -7,5 +7,5 @@ function! RunTests(filename)
     " Write the file and run tests for the given filename
     :w
     :silent !echo;echo;echo;echo;echo
-    exec ":!time rspec " . a:filename . " --no-color"
+    exec ":!time NOEXEC=0 rspec " . a:filename . " --no-color"
 endfunction
