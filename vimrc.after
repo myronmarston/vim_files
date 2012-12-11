@@ -65,7 +65,16 @@ function! RunTests(filename)
     " Write the file and run tests for the given filename
     :w
     :silent !echo;echo;echo;echo;echo
-    exec ":!time NOEXEC=0 rspec " . a:filename " --backtrace"
+    let rspec_bin = FindRSpecBinary()
+    exec ":!time NOEXEC=0 " . rspec_bin . a:filename " --backtrace"
+endfunction
+
+function! FindRSpecBinary()
+  if globpath("bin", "rspec") == "bin/rspec"
+    return "bin/rspec "
+  else
+    return "rspec "
+  endif
 endfunction
 
 function! SetTestFile()
