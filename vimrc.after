@@ -65,15 +65,20 @@ function! RunTests(filename)
     " Write the file and run tests for the given filename
     :w
     :silent !echo;echo;echo;echo;echo
-    let rspec_bin = FindRSpecBinary()
+    let rspec_bin = FindRSpecBinary(".")
     exec ":!time NOEXEC=0 " . rspec_bin . a:filename " --backtrace"
 endfunction
 
-function! FindRSpecBinary()
-  if filereadable("bin/rspec")
-    return "bin/rspec "
-  else
+function! FindRSpecBinary(dir)
+  if filereadable(a:dir . "/bin/rspec")
+    return a:dir . "/bin/rspec "
+  elseif filereadable(a:dir . "/git/.config")
+    " If there's a .git/config file, assume it is the project root;
+    " Just run the system-gem installed rspec binary.
     return "rspec "
+  else
+    " We may be in a project sub-dir; check our parent dir
+    return FindRSpecBinary(a:dir . "/..")
   endif
 endfunction
 
