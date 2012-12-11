@@ -70,7 +70,7 @@ function! RunTests(filename)
 endfunction
 
 function! FindRSpecBinary()
-  if globpath("bin", "rspec") == "bin/rspec"
+  if filereadable("bin/rspec")
     return "bin/rspec "
   else
     return "rspec "
