@@ -72,7 +72,7 @@ endfunction
 function! FindRSpecBinary(dir)
   if filereadable(a:dir . "/bin/rspec")
     return a:dir . "/bin/rspec "
-  elseif filereadable(a:dir . "/git/.config")
+  elseif filereadable(a:dir . "/.git/config")
     " If there's a .git/config file, assume it is the project root;
     " Just run the system-gem installed rspec binary.
     return "rspec "
