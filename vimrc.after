@@ -152,3 +152,5 @@ endfunction
 :command! PromoteToLet :call PromoteToLet()
 :map <leader>p :PromoteToLet<cr>
 
+
+let g:ctrlp_custom_ignore = { 'dir': '\v[\/](\.bundle|bundle)$' }
