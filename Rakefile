@@ -13,6 +13,7 @@ desc "Install my Janus customized vim files"
 task :install_plugins do
   extra_plugins = %w[
     git://github.com/vim-scripts/bufexplorer.zip.git
+    git://github.com/tpope/vim-rvm.git
   ]
 
   Dir.chdir(File.expand_path("~#{ENV['USER']}")) do
