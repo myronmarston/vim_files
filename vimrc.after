@@ -56,6 +56,9 @@ let g:bufExplorerShowRelativePath=1 " use relative paths for buffer explorer
 set undodir=~/.vim/undodir
 set undofile
 
+" System Yank: will copy into the system clipboard on OS X
+vmap sy :w !pbcopy<CR><CR>
+
 "set transparency=12
 
 " Test helpers from Gary Bernhardt's screen cast:
