@@ -114,6 +114,7 @@ endfunction
 
 " Run this file
 map <leader>m :call RunTestFile()<cr>
+map <leader>b :call RunTestFile(' -rdebugger')<cr>
 " Run only the example under the cursor
 map <leader>. :call RunNearestTest()<cr>
 " Run all test files
