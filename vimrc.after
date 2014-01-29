@@ -158,3 +158,6 @@ endfunction
 
 
 let g:ctrlp_custom_ignore = { 'dir': '\v[\/](\.bundle|bundle|coverage|log)$' }
+
+" Use ag in place of ack
+let g:ackprg = 'ag --nogroup --nocolor --column'
