@@ -69,7 +69,7 @@ function! RunTests(filename)
     :w
     :silent !echo;echo;echo;echo;echo
     let rspec_bin = FindRSpecBinary(".")
-    exec ":!time NOEXEC=0 " . rspec_bin . a:filename " --backtrace"
+    exec ":!time NOEXEC=0 " . rspec_bin . a:filename
 endfunction
 
 function! FindRSpecBinary(dir)
