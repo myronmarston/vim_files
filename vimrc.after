@@ -67,9 +67,16 @@ vmap sy :w !pbcopy<CR><CR>
 function! RunTests(filename)
     " Write the file and run tests for the given filename
     :w
-    :silent !echo;echo;echo;echo;echo
-    let rspec_bin = FindRSpecBinary(".")
-    exec ":!time NOEXEC=0 " . rspec_bin . a:filename
+    :silent !echo;echo;echo;
+
+    let is_rspec = match(a:filename, '_spec.rb$') != -1
+
+    if is_rspec
+      let rspec_bin = FindRSpecBinary(".")
+      exec ":!time NOEXEC=0 " . rspec_bin . a:filename
+    else
+      exec ":!time elixir " . a:filename
+    end
 endfunction
 
 function! FindRSpecBinary(dir)
@@ -90,6 +97,17 @@ function! SetTestFile()
     let t:grb_test_file=@%
 endfunction
 
+function! ConditionallySetTestFile()
+    let in_spec_file   = match(expand("%"), '_spec.rb$') != -1
+    let in_elixir_file = match(expand("%"), '_test.exs$') != -1
+
+    if in_spec_file
+        call SetTestFile()
+    elseif in_elixir_file
+        call SetTestFile()
+    end
+endfunction
+
 function! RunTestFile(...)
     if a:0
         let command_suffix = a:1
@@ -97,13 +115,13 @@ function! RunTestFile(...)
         let command_suffix = ""
     endif
 
-    " Run the tests for the previously-marked file.
-    let in_spec_file = match(expand("%"), '_spec.rb$') != -1
-    if in_spec_file
-        call SetTestFile()
-    elseif !exists("t:grb_test_file")
+    call ConditionallySetTestFile()
+
+    if !exists("t:grb_test_file")
+        exec "!echo 'No test file set'"
         return
     end
+
     call RunTests(t:grb_test_file . command_suffix)
 endfunction
 
@@ -112,13 +130,17 @@ function! RunNearestTest()
     call RunTestFile(":" . spec_line_number)
 endfunction
 
+function! RunTestFileWithDebugger()
+    call RunTestFile(' -rdebugger')
+endfunction
+
 " Run this file
 map <leader>m :call RunTestFile()<cr>
-map <leader>b :call RunTestFile(' -rdebugger')<cr>
+map <leader>b :call RunTestFileWithDebugger()<cr>
 " Run only the example under the cursor
 map <leader>. :call RunNearestTest()<cr>
-" Run all test files
-map <leader>a :call RunTests('spec')<cr>
+" Run all test files -- not used for now
+" map <leader>a :call RunTests('spec')<cr>
 
 " Jump to last cursor position unless it's invalid or in an event handler
 autocmd BufReadPost *
