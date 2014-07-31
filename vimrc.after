@@ -69,13 +69,13 @@ function! RunTests(filename)
     :w
     :silent !echo;echo;echo;
 
-    let is_rspec = match(a:filename, '_spec.rb$') != -1
+    let is_elixir = match(a:filename, '_test.exs$') != -1
 
-    if is_rspec
+    if is_elixir
+      exec ":!time elixir " . a:filename
+    else
       let rspec_bin = FindRSpecBinary(".")
       exec ":!time NOEXEC=0 " . rspec_bin . a:filename
-    else
-      exec ":!time elixir " . a:filename
     end
 endfunction
 
