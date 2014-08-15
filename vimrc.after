@@ -73,7 +73,7 @@ function! RunTests(filename)
     let is_elixir = match(a:filename, '_test.exs$') != -1
 
     if is_mix_project
-      exec ":!time mix test"
+      exec ":!time mix test " . a:filename
     elseif is_elixir
       exec ":!time elixir " . a:filename
     else
