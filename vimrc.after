@@ -17,6 +17,9 @@ set winminheight=5
 set winheight=999
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" Disable ex mode. It's useless and annoying.
+" http://www.bestofvim.com/tip/leave-ex-mode-good/
+nnoremap Q <nop>
 
 "Invisible character colors
 highlight NonText guifg=#4a4a59
